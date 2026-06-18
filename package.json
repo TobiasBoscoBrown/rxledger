@@ -2,7 +2,7 @@
   "name": "rxledger",
   "version": "1.0.0",
   "private": true,
-  "description": "A regulated prescription backbone — demo of the CollectiveOS Senior Backend Engineer stack (NestJS · PostgreSQL · Zod · Turborepo · AWS-ready).",
+  "description": "A regulated prescription backbone \u2014 demo of the CollectiveOS Senior Backend Engineer stack (NestJS \u00b7 PostgreSQL \u00b7 Zod \u00b7 Turborepo \u00b7 AWS-ready).",
   "workspaces": [
     "apps/*",
     "packages/*"
@@ -23,5 +23,6 @@
   },
   "engines": {
     "node": ">=20"
-  }
+  },
+  "packageManager": "npm@10.9.8"
 }

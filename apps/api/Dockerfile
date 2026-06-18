@@ -8,7 +8,7 @@ COPY packages/eslint-plugin-phi/package.json packages/eslint-plugin-phi/
 COPY apps/api/package.json apps/api/
 RUN npm install --no-audit --no-fund --ignore-scripts
 COPY . .
-RUN npm --workspace @rxledger/api run build
+RUN npm run build
 
 FROM node:20-bookworm-slim AS deps
 WORKDIR /repo
