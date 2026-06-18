@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RxLedger — regulated prescription backbone</title>
+<meta name="description" content="A working backend slice in the CollectiveOS stack: NestJS · PostgreSQL · Zod · AWS-ready. Immutable audit log, envelope-encrypted PHI, self-built auth." />
+<style>
+  :root{
+    --bg:#0a0e14; --panel:#11161f; --panel2:#0e131b; --line:#1e2733;
+    --ink:#e6edf3; --mut:#8b98a9; --acc:#3ddc97; --acc2:#5aa2ff; --warn:#ff6b6b; --code:#0b1018;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1200px 600px at 70% -10%,#13202b 0,transparent 60%),var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--acc2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:980px;margin:0 auto;padding:0 22px}
+  header{padding:64px 0 28px}
+  .tag{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--acc);border:1px solid var(--line);border-radius:999px;padding:5px 12px;margin-bottom:18px}
+  h1{font-size:clamp(30px,5vw,46px);line-height:1.08;margin:0 0 12px;letter-spacing:-.02em}
+  h1 .grad{background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .lede{font-size:18px;color:var(--mut);max-width:760px}
+  .cta{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:11px 16px;border-radius:10px;font-weight:600;font-size:14px}
+  .btn.p{background:linear-gradient(90deg,#15351f,#10202f);border-color:#244}
+  .btn:hover{border-color:var(--acc);text-decoration:none}
+  section{padding:30px 0;border-top:1px solid var(--line)}
+  h2{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);font-family:var(--mono);margin:0 0 18px}
+  .grid{display:grid;gap:14px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:760px){.g3,.g2{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .card h3{margin:0 0 6px;font-size:15px}
+  .card p{margin:0;color:var(--mut);font-size:13.5px}
+  .stat{font-family:var(--mono);font-size:26px;color:var(--acc);font-weight:600}
+  .kpi{display:flex;gap:10px;align-items:baseline}
+  pre{background:var(--code);border:1px solid var(--line);border-radius:12px;padding:16px;overflow:auto;font-family:var(--mono);font-size:12.5px;line-height:1.5;margin:0}
+  code{font-family:var(--mono)}
+  .ok{color:var(--acc)} .bad{color:var(--warn)} .dim{color:var(--mut)} .b{color:var(--ink)}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  td,th{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--mut);font-weight:600;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase}
+  td code{color:var(--acc2)}
+  .pill{font-family:var(--mono);font-size:11px;color:var(--acc);border:1px solid var(--line);border-radius:6px;padding:2px 7px}
+  footer{padding:40px 0 70px;color:var(--mut);font-size:13px;border-top:1px solid var(--line)}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-family:var(--mono);font-size:12.5px;color:var(--mut)}
+  .node{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:7px 10px;color:var(--ink)}
+  .arrow{color:var(--acc)}
+  .muted-note{font-size:12.5px;color:var(--mut);margin-top:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <span class="tag">Demo built for the CollectiveOS · Senior Backend Engineer role</span>
+    <h1>RxLedger — a regulated <span class="grad">prescription backbone</span></h1>
+    <p class="lede">A working slice of the backend a regulated D2C health platform actually needs, built in the exact stack from the posting: <b class="b">NestJS modular monolith · TypeScript · PostgreSQL · shared Zod schemas in a Turborepo · AWS-ready (ECS Fargate / RDS / KMS / CloudTrail)</b>. It implements the hard, security-critical parts end to end — and proves the two that matter most against a real database.</p>
+    <div class="cta">
+      <a class="btn p" href="https://github.com/TobiasBoscoBrown/rxledger">↗ GitHub repository</a>
+      <a class="btn" href="https://github.com/TobiasBoscoBrown/rxledger/blob/main/docs/DB-PROOF.md">Live DB proof</a>
+      <a class="btn" href="https://github.com/TobiasBoscoBrown/rxledger/blob/main/docs/JD-MAPPING.md">JD → code map</a>
+      <a class="btn" href="https://github.com/TobiasBoscoBrown/rxledger/blob/main/docs/ARCHITECTURE.md">Architecture</a>
+    </div>
+  </header>
+
+  <section>
+    <h2>Verified, not asserted</h2>
+    <div class="grid g3">
+      <div class="card"><div class="kpi"><span class="stat">49</span><span class="dim">+ 6 + rule</span></div><h3>tests green</h3><p>49 API (unit + e2e), 6 contract, plus the custom ESLint-rule test. <code class="dim">tsc --strict</code> &amp; eslint clean.</p></div>
+      <div class="card"><div class="kpi"><span class="stat">80/80/80</span></div><h3>coverage gate</h3><p>Enforced in CI over the domain &amp; security logic. Actual: 97.5% stmts / 82.7% branch.</p></div>
+      <div class="card"><div class="kpi"><span class="stat">real DB</span></div><h3>guarantees proven</h3><p>Audit immutability &amp; PHI encryption executed on managed Postgres 17 — see below.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The domain</h2>
+    <div class="flow">
+      <span class="node">Clinician encounter</span><span class="arrow">→</span>
+      <span class="node">Prescription state machine</span><span class="arrow">→</span>
+      <span class="node">Order + payment (idempotent)</span><span class="arrow">→</span>
+      <span class="node">Pharmacy fulfillment</span>
+    </div>
+    <p class="muted-note">Every transition is guarded, optimistically locked, and written — with its audit row — inside one transaction. The transition table is shared Zod data, so the web client and the API can never disagree on a legal move.</p>
+  </section>
+
+  <section>
+    <h2>Proof #1 — the audit log is append-only, enforced by the database</h2>
+    <p class="dim" style="margin-top:-6px">A trigger refuses <code>UPDATE</code>/<code>DELETE</code> for <i>any</i> role — even the table owner. A second layer revokes those privileges from the app's DB role entirely. Run live on Postgres 17:</p>
+    <pre><span class="dim"># after inserting one audit row (id = 1):</span>
+<span class="b">UPDATE</span> audit_log <span class="b">SET</span> action = 'tampered' <span class="b">WHERE</span> id = 1;
+<span class="bad">ERROR: 23000: audit_log is append-only: UPDATE is not permitted</span>
+
+<span class="b">DELETE FROM</span> audit_log <span class="b">WHERE</span> id = 1;
+<span class="bad">ERROR: 23000: audit_log is append-only: DELETE is not permitted</span>
+
+<span class="dim"># the row is still there. the log only grows. <span class="ok">✓</span></span></pre>
+  </section>
+
+  <section>
+    <h2>Proof #2 — PHI is stored only as ciphertext</h2>
+    <p class="dim" style="margin-top:-6px">PHI is envelope-encrypted (AES-256-GCM, per-value data keys wrapped by a KMS master key) before it ever reaches the database. Read back from the live table:</p>
+    <table>
+      <thead><tr><th>column</th><th>stored value</th><th>is envelope</th><th>leaks plaintext</th></tr></thead>
+      <tbody><tr><td><code>indication_enc</code></td><td><code>v1.L27CP0-3dtgrlibxykKPf…(200 chars)</code></td><td><span class="ok">true</span></td><td><span class="ok">false</span></td></tr></tbody>
+    </table>
+    <p class="muted-note">Original plaintext was <code class="dim">"Indication: soft-tissue recovery; BPC-157 250mcg BID x8wk"</code>. A database dump alone yields nothing — the key lives outside the DB.</p>
+  </section>
+
+  <section>
+    <h2>Self-built auth — refresh rotation with reuse detection</h2>
+    <pre><span class="dim">// Each login starts a token family. Every refresh rotates the token.</span>
+<span class="dim">// Replaying a spent token = theft → revoke the whole family.</span>
+<span class="b">if</span> (record.revoked || record.replacedBy !== <span class="b">null</span>) {
+  <span class="b">await</span> this.store.revokeFamily(record.familyId);
+  <span class="b">throw new</span> UnauthorizedError(<span class="ok">'Refresh token reuse detected — session revoked'</span>);
+}</pre>
+    <p class="muted-note">bcrypt · short-lived JWT access + rotating opaque refresh (stored only as a SHA-256 hash) · TOTP MFA (RFC 6238, from scratch) · RBAC. Login timing is uniform whether or not the email exists.</p>
+  </section>
+
+  <section>
+    <h2>The guardrail the JD asks for — a custom PHI ESLint rule</h2>
+    <pre><span class="dim"># a developer adds a PHI field but forgets to tag it:</span>
+z.object({ <span class="bad">diagnosis</span>: z.string() })
+
+<span class="bad">✖ error</span>  Field 'diagnosis' looks like PHI but is not wrapped in phi().
+        Untagged PHI is neither encrypted nor audited.   <span class="dim">@rxledger/phi/require-phi-tag</span>
+
+<span class="dim"># build fails in CI. untagged PHI literally cannot ship. <span class="ok">✓</span></span></pre>
+  </section>
+
+  <section>
+    <h2>JD → implementation, at a glance</h2>
+    <table>
+      <tbody>
+        <tr><td>Self-built auth (bcrypt + JWT refresh rotation + TOTP MFA + RBAC)</td><td><code>modules/auth/*</code></td></tr>
+        <tr><td>Immutable audit log, INSERT-only application access</td><td><code>migrations/0001_init.sql</code>, <code>modules/audit/*</code></td></tr>
+        <tr><td>PHI encrypted at rest (KMS-backed envelope)</td><td><code>modules/crypto/*</code></td></tr>
+        <tr><td>Prescription state machine, optimistic locking</td><td><code>modules/prescriptions/*</code></td></tr>
+        <tr><td>Vendor adapters: webhook idempotency, retry, circuit breakers</td><td><code>modules/pharmacy/*</code>, <code>common/util/*</code></td></tr>
+        <tr><td>Shared Zod schemas across web + API</td><td><code>packages/contracts</code></td></tr>
+        <tr><td>PHI-tagged fields enforced by ESLint</td><td><code>packages/eslint-plugin-phi</code></td></tr>
+        <tr><td>Jest 80/80/80, GitHub Actions, Docker, IaC w/ auto-rollback</td><td><code>jest.config.cjs</code>, <code>.github/</code>, <code>Dockerfile</code>, <code>infra/main.tf</code></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Run it yourself</h2>
+    <pre>git clone https://github.com/TobiasBoscoBrown/rxledger
+cd rxledger &amp;&amp; npm install
+docker compose up -d db
+cp .env.example .env
+npm --workspace @rxledger/api run db:migrate
+npm --workspace @rxledger/api run db:seed
+npm test            <span class="dim"># 49 + 6 green, 80/80/80 gate</span>
+npm run dev         <span class="dim"># http://localhost:8787/health</span></pre>
+    <p class="muted-note">Production target is ECS Fargate (Dockerfile + <code>infra/main.tf</code> with KMS-encrypted RDS, Redis, S3, CloudTrail, and CloudWatch-gated auto-rollback). This page is the project showcase; the system itself lives in the repo.</p>
+  </section>
+
+  <footer>
+    <div class="wrap" style="padding:0">
+      Built by Tobias Bosco Brown · <a href="https://github.com/TobiasBoscoBrown/rxledger">github.com/TobiasBoscoBrown/rxledger</a><br/>
+      A focused demo for the CollectiveOS Senior Backend Engineer role — regulated-system instincts, in their stack, proven on real infrastructure.
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
