@@ -1,0 +1,14 @@
+{
+  "name": "@rxledger/eslint-plugin-phi",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Custom ESLint guardrail: fail the build if a PHI-looking field is declared in a Zod schema without an explicit phi() tag.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test",
+    "lint": "echo 'no-op'"
+  },
+  "peerDependencies": {
+    "eslint": ">=8"
+  }
+}
